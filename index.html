@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A comprehensive study planner for students to manage tasks, track progress, and improve productivity.">
+    <title>Student Study Planner</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div id="authPage">
+        <div class="auth-container">
+            <h1>Student Study Planner</h1>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Login</button>
+                <button class="auth-tab" data-tab="register">Register</button>
+            </div>
+            <div id="authForms">
+                <div id="loginForm" class="auth-form active">
+                    <h2>Login</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="loginUsername">Username</label>
+                            <input type="text" id="loginUsername" placeholder="Enter your username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+                <div id="registerForm" class="auth-form">
+                    <h2>Register</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="registerUsername">Username</label>
+                            <input type="text" id="registerUsername" placeholder="Choose a username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" placeholder="Choose a password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
+            </div>
+            <div id="authError" class="error-message"></div>
+        </div>
+    </div>
+
+    <div id="appContent" style="display: none;">
+        <div id="sidebar">
+            <div class="menu-item active" page="calendar">Calendar</div>
+            <div class="menu-item" page="schedule">Schedule</div>
+            <div class="menu-item" page="notes">Notes</div>
+            <div class="menu-item" page="studyTimer">Study Timer</div>
+            <div class="menu-item" page="progressTracking">Progress Tracking</div>
+            <div class="menu-item" page="calculateGrade">Calculate Grade</div>
+            <div class="menu-item" page="flashcards">Flashcards</div>
+            <div class="menu-item" page="askAI">Ask AI</div>
+            <div class="menu-item" page="videoLearning">Video Learning</div>
+            <div class="menu-item" page="collaborationHub">Collaboration Hub</div>
+            <button class="add-button">+ Add Task</button>
+            <button id="logoutButton" class="logout-button">Logout</button>  
+        </div>
+
+        <div id="content">
+            <div id="calendar" class="page active">
+                <div id="calendarHeader">
+                    <button>&lt;</button>
+                    <h2 id="currentMonth"></h2>
+                    <span id="currentTime"></span>
+                    <button>Today</button>
+                    <button>&gt;</button>
+                </div>
+                <div id="calendarGrid"></div>
+            </div>
+
+            <div id="schedule" class="page">
+                <h2>Schedule</h2>
+                <div class="schedule-container">
+                    <div id="todayTasks" class="schedule-column">
+                        <h3>Today</h3>
+                    </div>
+                    <div id="tomorrowTasks" class="schedule-column">
+                        <h3>Tomorrow</h3>
+                    </div>
+                    <div id="upcomingTasks" class="schedule-column">
+                        <h3>Upcoming</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collaborationHub" class="page">
+                <h2>Collaboration Hub</h2>
+                <div class="hub-controls">
+                    <button id="createRoomBtn" class="primary-button">Create Study Room</button>
+                    <button id="joinRoomBtn" class="secondary-button">Join Room</button>
+                    <button id="sharedCalendarBtn" class="secondary-button">Shared Calendar</button>
+                </div>
+                
+                <div class="collaboration-container">
+                    <div class="study-rooms-section">
+                        <h3>Your Study Rooms</h3>
+                        <div id="studyRoomsList" class="rooms-list"></div>
+                    </div>
+                    
+                    <div class="shared-documents-section">
+                        <h3>Shared Documents</h3>
+                        <div class="document-controls">
+                            <button id="uploadDocBtn" class="secondary-button">Upload Document</button>
+                            <button id="createDocBtn" class="secondary-button">Create Document</button>
+                        </div>
+                        <div id="documentsList" class="documents-list"></div>
+                    </div>
+                </div>
+                
+                <div id="roomView" class="room-view" style="display: none;">
+                    <div class="room-header">
+                        <h3 id="currentRoomName">Room Name</h3>
+                        <div class="room-controls">
+                            <button id="inviteBtn" class="secondary-button">Invite</button>
+                            <button id="leaveRoomBtn" class="secondary-button">Leave Room</button>
+                        </div>
+                    </div>
+                    
+                    <div class="room-content">
+                        <div class="participants-list">
+                            <h4>Participants</h4>
+                            <div id="roomParticipants"></div>
+                        </div>
+                        
+                        <div class="chat-container">
+                            <div id="roomChat" class="chat-messages"></div>
+                            <div class="chat-input">
+                                <input type="text" id="roomChatInput" placeholder="Type a message...">
+                                <button id="sendRoomChatBtn">Send</button>
+                            </div>
+                        </div>
+                        
+                        <div class="whiteboard-container">
+                            <h4>Whiteboard</h4>
+                            <div id="whiteboard"></div>
+                            <div class="whiteboard-controls">
+                                <button id="clearWhiteboardBtn">Clear</button>
+                                <input type="color" id="whiteboardColor" value="#000000">
+                                <select id="whiteboardTool">
+                                    <option value="pen">Pen</option>
+                                    <option value="eraser">Eraser</option>
+                                    <option value="text">Text</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="documentEditor" style="display: none;">
+                    <div class="editor-header">
+                        <input type="text" id="documentTitle" placeholder="Document Title">
+                        <div class="editor-controls">
+                            <button id="saveDocumentBtn" class="primary-button">Save</button>
+                            <button id="closeEditorBtn" class="secondary-button">Close</button>
+                            <button id="shareDocumentBtn" class="secondary-button">Share</button>
+                        </div>
+                    </div>
+                    <div class="editor-toolbar">
+                        <button data-command="bold"><b>B</b></button>
+                        <button data-command="italic"><i>I</i></button>
+                        <button data-command="underline"><u>U</u></button>
+                        <button data-command="insertOrderedList">1.</button>
+                        <button data-command="insertUnorderedList">•</button>
+                        <select data-command="fontName">
+                            <option value="Arial">Arial</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier New">Courier New</option>
+                        </select>
+                        <select data-command="fontSize">
+                            <option value="1">Small</option>
+                            <option value="3" selected>Normal</option>
+                            <option value="5">Large</option>
+                            <option value="7">Extra Large</option>
+                        </select>
+                        <input type="color" data-command="foreColor">
+                        <input type="color" data-command="backColor">
+                    </div>
+                    <div id="editor" contenteditable="true" class="document-editor"></div>
+                </div>
+                
+                <div id="sharedCalendarView" style="display: none;">
+                    <div class="calendar-header">
+                        <h3>Shared Calendar</h3>
+                        <div class="calendar-controls">
+                            <button id="prevMonthBtn">&lt;</button>
+                            <span id="sharedCalendarMonth"></span>
+                            <button id="nextMonthBtn">&gt;</button>
+                            <button id="closeSharedCalendarBtn" class="secondary-button">Close</button>
+                        </div>
+                    </div>
+                    <div id="sharedCalendarGrid" class="shared-calendar-grid"></div>
+                    <div class="shared-calendar-controls">
+                        <button id="addEventBtn" class="primary-button">Add Event</button>
+                        <select id="calendarFilterSelect">
+                            <option value="all">All Events</option>
+                            <option value="my">My Events</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="notes" class="page">
+                <h2>Notes</h2>
+                <div id="notesList"></div>
+                <form id="addNoteForm">
+                    <input type="text" id="noteTitle" placeholder="Note Title" required>
+                    <textarea id="noteContent" placeholder="Note Content" required></textarea>
+                    <button type="submit">Add Note</button>
+                </form>
+            </div>
+
+            <div id="studyTimer" class="page">
+                <h2>Study Timer</h2>
+                <div id="timerDisplay">25:00</div>
+                <button id="startTimer">Start</button>
+                <button id="pauseTimer">Pause</button>
+                <button id="resetTimer">Reset</button>
+                <div id="timerSettings">
+                    <label for="focusTime">Focus Time (minutes):</label>
+                    <input type="number" id="focusTime" value="25" min="1">
+                    <label for="breakTime">Break Time (minutes):</label>
+                    <input type="number" id="breakTime" value="5" min="1">
+                </div>
+            </div>
+
+            <div id="progressTracking" class="page">
+                <h2>Progress Tracking</h2>
+                <button id="clearHistoryBtn" class="delete-button">Clear History</button>
+                <div class="progress-grid">
+                    <div class="progress-section">
+                        <h3>Task Completion</h3>
+                        <canvas id="taskCompletionChart"></canvas>
+                        <p id="taskCompletionRate"></p>
+                    </div>
+                    <div class="progress-section">
+                        <h3>Study Time</h3>
+                        <canvas id="studyTimeChart"></canvas>
+                        <p id="totalStudyTime"></p>
+                    </div>
+                    <div class="progress-section">
+                        <h3>Productivity Streak</h3>
+                        <p id="productivityStreak"></p>
+                    </div>
+                    <div class="progress-section">
+                        <h3>Subject Performance</h3>
+                        <canvas id="subjectPerformanceChart"></canvas>
+                    </div>
+                    <div class="progress-section">
+                        <h3>Goals</h3>
+                        <div id="goalsProgress"></div>
+                        <button id="addGoalBtn">Add New Goal</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="calculateGrade" class="page">
+                <h2>Calculate Grade</h2>
+                <div id="modules"></div>
+                <button id="addModuleBtn">Add Module</button>
+            </div>
+
+            <div id="askAI" class="page">
+                <h2>Ask AI</h2>
+                <button id="clearChatButton" class="secondary-button">Clear Chat</button>
+                <button id="saveChatButton" class="secondary-button">Save Chats</button>
+                <div id="chatContainer">
+                    <div id="chatMessages"></div>
+                    <div id="userInputContainer">
+                        <textarea id="userInput" placeholder="Type your message..." aria-label="Type your message"></textarea>
+                        <button id="sendButton">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="flashcards" class="page">
+                <h2>Flashcards</h2>
+                <div class="flashcards-controls">
+                    <button id="createDeckBtn" class="primary-button">Create Deck</button>
+                    <button id="importDeckBtn" class="secondary-button">Import Deck</button>
+                    <select id="deckSelector">
+                        <option value="">Select a Deck</option>
+                    </select>
+                </div>
+                
+                <div id="flashcardsDeckView" class="flashcards-view active-view">
+                    <h3>Your Decks</h3>
+                    <div id="decksContainer" class="decks-container"></div>
+                </div>
+                
+                <div id="flashcardsEditView" class="flashcards-view">
+                    <div class="edit-header">
+                        <h3 id="currentDeckTitle">Edit Deck</h3>
+                        <div class="edit-controls">
+                            <button id="addCardBtn" class="primary-button">Add Card</button>
+                            <button id="saveDeckBtn" class="secondary-button">Save Deck</button>
+                            <button id="backToDeckBtn" class="secondary-button">Back to Decks</button>
+                        </div>
+                    </div>
+                    <div id="cardsList" class="cards-list"></div>
+                </div>
+                
+                <div id="flashcardsStudyView" class="flashcards-view">
+                    <div class="study-header">
+                        <h3 id="studyDeckTitle">Study Deck</h3>
+                        <div class="study-progress">
+                            <span id="cardProgress">Card 0/0</span>
+                            <div class="progress-bar-container">
+                                <div id="studyProgressBar" class="progress-bar"></div>
+                            </div>
+                        </div>
+                        <button id="exitStudyBtn" class="secondary-button">Exit</button>
+                    </div>
+                    
+                    <div class="flashcard-container">
+                        <div class="flashcard" id="currentFlashcard">
+                            <div class="flashcard-front"></div>
+                            <div class="flashcard-back"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="rating-buttons">
+                        <button class="rating-btn" data-rating="again">Again</button>
+                        <button class="rating-btn" data-rating="hard">Hard</button>
+                        <button class="rating-btn" data-rating="good">Good</button>
+                        <button class="rating-btn" data-rating="easy">Easy</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="videoLearning" class="page">
+                <h2>Video Learning</h2>
+                
+                <div class="video-controls">
+                    <div class="search-container">
+                        <input type="text" id="videoSearch" placeholder="Search videos...">
+                        <button id="searchButton" class="primary-button">Search</button>
+                    </div>
+                </div>
+
+                <div class="video-container">
+                    <div class="video-results">
+                        <h3>Search Results</h3>
+                        <div id="videoResults" class="results-grid"></div>
+                    </div>
+                    
+                    <div class="playlists-section">
+                        <h3>My Playlists</h3>
+                        <button id="createPlaylistBtn" class="secondary-button">Create Playlist</button>
+                        <div id="playlistsContainer"></div>
+                    </div>
+                </div>
+
+                <div id="videoPlayer" class="video-player-container" style="display: none;">
+                    <div class="player-header">
+                        <h3 id="currentVideoTitle">Video Title</h3>
+                        <button id="closeVideoBtn" class="secondary-button">Close</button>
+                    </div>
+                    <div id="playerWrapper"></div>
+                    <div class="bookmark-section">
+                        <h4>Bookmarks</h4>
+                        <div class="bookmark-controls">
+                            <input type="text" id="bookmarkNote" placeholder="Add note for bookmark">
+                            <button id="addBookmarkBtn" class="primary-button">Add Bookmark</button>
+                        </div>
+                        <div id="bookmarksList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addTaskModal" class="modal">
+        <div class="modal-content">
+            <h3>Add Task</h3>
+            <input type="text" id="taskName" placeholder="Task Name" required>
+            <input type="date" id="taskDate" required>
+            <input type="time" id="taskTime" required>
+            <select id="taskPriority" required>
+                <option value="">Select Priority</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <div class="color-input-wrapper">
+                <input type="color" id="taskColor" value="#4CAF50">
+                <span>Choose a color</span>
+            </div>
+            <input type="text" id="taskSubject" placeholder="Subject" required>
+            <textarea id="taskNotes" placeholder="Additional Notes"></textarea>
+            <div class="modal-buttons">
+                <button id="addTaskButton" disabled>Add Task</button>
+                <button onclick="closeModal('addTaskModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="assessmentModal" class="modal">
+        <div class="modal-content">
+            <h3 id="assessmentModalTitle">Add Assessment</h3>
+            <input type="text" id="assessmentName" placeholder="Assessment Name" required>
+            <input type="number" id="assessmentScore" placeholder="Score" required>
+            <input type="number" id="assessmentTotalScore" placeholder="Total Score" required>
+            <input type="number" id="assessmentWeight" placeholder="Weight (%)" required>
+            <div class="modal-buttons">
+                <button id="saveAssessmentBtn">Save</button>
+                <button id="closeAssessmentModalBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notificationArea"></div>
+
+    <div id="createDeckModal" class="modal">
+        <div class="modal-content">
+            <h3>Create New Deck</h3>
+            <div class="form-group">
+                <label for="deckTitle">Deck Title</label>
+                <input type="text" id="deckTitle" placeholder="Enter deck title" required>
+            </div>
+            <div class="form-group">
+                <label for="deckSubject">Subject</label>
+                <input type="text" id="deckSubject" placeholder="Enter subject">
+            </div>
+            <div class="form-group">
+                <label for="deckDescription">Description</label>
+                <textarea id="deckDescription" placeholder="Enter description"></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button id="saveDeckModalBtn" class="primary-button">Create Deck</button>
+                <button onclick="closeModal('createDeckModal')" class="secondary-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="createCardModal" class="modal">
+        <div class="modal-content">
+            <h3>Add Flashcard</h3>
+            <div class="form-group">
+                <label for="cardFront">Front (Question)</label>
+                <textarea id="cardFront" placeholder="Enter question or term" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="cardBack">Back (Answer)</label>
+                <textarea id="cardBack" placeholder="Enter answer or definition" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="cardTags">Tags (comma separated)</label>
+                <input type="text" id="cardTags" placeholder="E.g., important, exam, difficult">
+            </div>
+            <div class="modal-buttons">
+                <button id="saveCardModalBtn" class="primary-button">Add Card</button>
+                <button onclick="closeModal('createCardModal')" class="secondary-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="playlistModal" class="modal">
+        <div class="modal-content">
+            <h3>Create Playlist</h3>
+            <div class="form-group">
+                <label for="playlistTitle">Playlist Title</label>
+                <input type="text" id="playlistTitle" placeholder="Enter playlist title" required>
+            </div>
+            <div class="form-group">
+                <label for="playlistDescription">Description</label>
+                <textarea id="playlistDescription" placeholder="Enter description"></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button id="savePlaylistBtn" class="primary-button">Save Playlist</button>
+                <button onclick="closeModal('playlistModal')" class="secondary-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="addToPlaylistModal" class="modal">
+        <div class="modal-content">
+            <h3>Add to Playlist</h3>
+            <div class="form-group">
+                <label for="selectPlaylist">Select Playlist</label>
+                <select id="selectPlaylist" required>
+                    <option value="">Choose a playlist</option>
+                </select>
+            </div>
+            <div class="modal-buttons">
+                <button id="confirmAddToPlaylistBtn" class="primary-button">Add</button>
+                <button onclick="closeModal('addToPlaylistModal')" class="secondary-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collaboration Hub Modals -->
+    <div id="createRoomModal" class="modal">
+        <div class="modal-content">
+            <h3>Create Study Room</h3>
+            <div class="form-group">
+                <label for="roomName">Room Name</label>
+                <input type="text" id="roomName" placeholder="Enter room name" required>
+            </div>
+            <div class="form-group">
+                <label for="roomTopic">Topic</label>
+                <input type="text" id="roomTopic" placeholder="Enter study topic">
+            </div>
+            <div class="form-group">
+                <label for="roomPrivacy">Privacy</label>
+                <select id="roomPrivacy">
+                    <option value="public">Public (Anyone can join)</option>
+                    <option value="private">Private (Invite only)</option>
+                </select>
+            </div>
+            <div class="modal-buttons">
+                <button id="confirmCreateRoomBtn" class="primary-button">Create Room</button>
+                <button onclick="closeModal('createRoomModal')" class="secondary-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="joinRoomModal" class="modal">
+        <div class="modal-content">
+            <h3>Join Study Room</h3>
+            <div class="form-group">
+                <label for="roomCode">Room Code</label>
+                <input type="text" id="roomCode" placeholder="Enter room code" required>
+            </div>
+            <div class="modal-buttons">
+                <button id="confirmJoinRoomBtn" class="primary-button">Join Room</button>
+                <button onclick="closeModal('joinRoomModal')" class="secondary-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="inviteModal" class="modal">
+        <div class="modal-content">
+            <h3>Invite to Room</h3>
+            <div class="form-group">
+                <label>Room Code</label>
+                <div class="room-code-display">
+                    <span id="displayRoomCode"></span>
+                    <button id="copyRoomCodeBtn" class="secondary-button">Copy</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inviteEmail">Or Invite by Email</label>
+                <input type="email" id="inviteEmail" placeholder="Enter email address">
+            </div>
+            <div class="modal-buttons">
+                <button id="sendInviteBtn" class="primary-button">Send Invite</button>
+                <button onclick="closeModal('inviteModal')" class="secondary-button">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="shareDocumentModal" class="modal">
+        <div class="modal-content">
+            <h3>Share Document</h3>
+            <div class="form-group">
+                <label>Document Link</label>
+                <div class="doc-link-display">
+                    <span id="documentLink"></span>
+                    <button id="copyDocLinkBtn" class="secondary-button">Copy</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="shareEmail">Share by Email</label>
+                <input type="email" id="shareEmail" placeholder="Enter email address">
+            </div>
+            <div class="form-group">
+                <label for="sharePermission">Permission</label>
+                <select id="sharePermission">
+                    <option value="view">View only</option>
+                    <option value="edit">Can edit</option>
+                </select>
+            </div>
+            <div class="modal-buttons">
+                <button id="sendShareBtn" class="primary-button">Share</button>
+                <button onclick="closeModal('shareDocumentModal')" class="secondary-button">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="calendarEventModal" class="modal">
+        <div class="modal-content">
+            <h3>Add Calendar Event</h3>
+            <div class="form-group">
+                <label for="eventTitle">Event Title</label>
+                <input type="text" id="eventTitle" placeholder="Enter event title" required>
+            </div>
+            <div class="form-group">
+                <label for="eventDate">Date</label>
+                <input type="date" id="eventDate" required>
+            </div>
+            <div class="form-group">
+                <label for="eventTime">Time</label>
+                <input type="time" id="eventTime">
+            </div>
+            <div class="form-group">
+                <label for="eventDescription">Description</label>
+                <textarea id="eventDescription" placeholder="Enter event description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="eventColor">Color</label>
+                <input type="color" id="eventColor" value="#4CAF50">
+            </div>
+            <div class="form-group">
+                <label for="eventShared">Share with</label>
+                <select id="eventShared" multiple>
+                    <!-- Will be populated dynamically -->
+                </select>
+            </div>
+            <div class="modal-buttons">
+                <button id="saveEventBtn" class="primary-button">Save Event</button>
+                <button onclick="closeModal('calendarEventModal')" class="secondary-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="inviteRoomModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('inviteRoomModal')">&times;</span>
+            <h2>Invite to Room</h2>
+            <div class="modal-body">
+                <p>Share this room code with others:</p>
+                <div class="room-code-display">
+                    <span id="roomCodeDisplay"></span>
+                    <button id="copyRoomCodeBtn" class="primary-button">Copy</button>
+                </div>
+                <div class="form-group">
+                    <label for="inviteEmail">Or invite by email:</label>
+                    <input type="email" id="inviteEmail" placeholder="Enter email address">
+                </div>
+                <button id="sendInviteBtn" class="primary-button">Send Invitation</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="addEventModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('addEventModal')">&times;</span>
+            <h2>Add Calendar Event</h2>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="eventTitle">Event Title*</label>
+                    <input type="text" id="eventTitle" placeholder="Enter event title" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventDate">Date*</label>
+                    <input type="date" id="eventDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventTime">Time (optional)</label>
+                    <input type="time" id="eventTime">
+                </div>
+                <div class="form-group">
+                    <label for="eventDescription">Description (optional)</label>
+                    <textarea id="eventDescription" placeholder="Enter event description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="eventColor">Color</label>
+                    <input type="color" id="eventColor" value="#4285f4">
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="eventShared" checked>
+                    <label for="eventShared">Share with study group</label>
+                </div>
+                <button onclick="addEvent()" class="primary-button">Add Event</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="eventDetailModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('eventDetailModal')">&times;</span>
+            <h2 id="eventDetailTitle">Event Title</h2>
+            <div class="modal-body">
+                <div class="event-details">
+                    <p><strong>Date:</strong> <span id="eventDetailDate"></span></p>
+                    <p><strong>Time:</strong> <span id="eventDetailTime"></span></p>
+                    <p><strong>Description:</strong></p>
+                    <p id="eventDetailDescription" class="event-description"></p>
+                    <p id="eventDetailCreator" class="event-creator"></p>
+                </div>
+                <div class="modal-actions">
+                    <button id="deleteEventBtn" class="delete-button">Delete Event</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+    <script src="script.js"></script>
+    <script src="quick-fix.js"></script>
+</body>
+</html>
