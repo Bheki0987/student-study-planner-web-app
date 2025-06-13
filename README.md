@@ -109,4 +109,4 @@ A comprehensive web application designed to help students manage their studies e
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
-ISC
+MIT LICENSE
