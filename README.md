@@ -69,8 +69,6 @@ A comprehensive web application designed to help students manage their studies e
 - Database: MongoDB
 - Authentication: JWT
 - External APIs: Google Generative AI, YouTube API
-- Real-time Features: Socket.io
-- UI Libraries: Chart.js, Fabric.js, SortableJS
 
 ## Getting Started
 
@@ -107,6 +105,10 @@ A comprehensive web application designed to help students manage their studies e
 
 ## Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Contact
+- Linkedin: [Bheki Mogola](https://www.linkedin.com/in/bheki-mogola-8481122b7/)
+- Email: [bpmogola](bpmogola@gmail.com)
 
 ## License
 MIT LICENSE
