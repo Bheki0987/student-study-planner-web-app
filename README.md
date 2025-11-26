@@ -19,7 +19,6 @@
 
 - [Overview](#-overview)
 - [Features](#-features)
-- [Demo](#-demo)
 - [Installation](#-installation)
 - [Configuration](#-configuration)
 - [Usage](#-usage)
@@ -117,27 +116,6 @@ Student Study Planner is a full-stack web application that provides students wit
 
 ---
 
-## 🎬 Demo
-
-### Screenshots
-
-<div align="center">
-
-**Login Page**
-![Login](https://via.placeholder.com/800x400?text=Login+Page)
-
-**Dashboard**
-![Dashboard](https://via.placeholder.com/800x400?text=Dashboard)
-
-**Study Timer**
-![Timer](https://via.placeholder.com/800x400?text=Study+Timer)
-
-**Flashcards**
-![Flashcards](https://via.placeholder.com/800x400?text=Flashcards)
-
-</div>
-
----
 
 ## 🚀 Installation
 
