@@ -546,6 +546,4 @@ copies or substantial portions of the Software.
 
 **⭐ Star this repo if you find it helpful!**
 
-Made with ❤️ by [Bheki Mogola](https://github.com/Bheki0987)
-
 </div>
