@@ -27,8 +27,9 @@
 - [API Documentation](#-api-documentation)
 - [Security](#-security)
 - [Contributing](#-contributing)
-- [License](#-license)
 - [Contact](#-contact)
+- [Acknowledgments](#-acknowledgments)
+- [Roadmap](#-roadmap)
 
 ---
 
@@ -419,7 +420,7 @@ Authorization: Bearer {token}
 
 ## 🤝 Contributing
 
-We welcome contributions! Here's how you can help:
+I welcome contributions! Here's how you can help:
 
 ### Contribution Guidelines
 
@@ -451,29 +452,6 @@ We welcome contributions! Here's how you can help:
 2. Create detailed bug report
 3. Include steps to reproduce
 4. Add screenshots if applicable
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License
-
-Copyright (c) 2025 Bheki Mogola
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-```
-
 ---
 
 ## 📞 Contact
@@ -518,27 +496,6 @@ copies or substantial portions of the Software.
 - [ ] Multi-language support
 - [ ] Voice commands
 - [ ] Export data (PDF, CSV)
-
----
-
-## 💡 Tips & Tricks
-
-### For Students
-- 📅 **Plan ahead**: Add tasks at the start of each week
-- ⏰ **Use Pomodoro**: 25-minute focus sessions work best
-- 🃏 **Review flashcards daily**: Consistency is key
-- 👥 **Study with peers**: Use collaboration rooms
-- 📊 **Track your progress**: Check analytics weekly
-
-### For Developers
-- 🔧 **Use nodemon**: Auto-restart server during development
-  ```bash
-  npm install -g nodemon
-  nodemon server.js
-  ```
-- 🐛 **Enable debug logs**: Set `DEBUG=*` in environment
-- 📝 **Use ESLint**: Maintain code quality
-- 🧪 **Write tests**: Ensure reliability
 
 ---
 
